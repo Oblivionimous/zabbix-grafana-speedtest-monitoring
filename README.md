@@ -1,4 +1,15 @@
-Claro! Aqui está o **`README.md` completo e aprimorado**, com todas as seções reorganizadas, incrementadas e profissionalmente redigidas — incluindo as novas instruções sobre os *UserParameters*, caminhos dos scripts, configuração no Zabbix Agent e crontab:
+## ⚠️ Observações Importantes
+
+> Este projeto **não tem como objetivo ensinar a configurar interfaces de rede, rotas ou regras de NAT em firewall de borda**.
+
+Para monitorar múltiplos links de internet com interfaces distintas, é **imprescindível**:
+
+* Ter as **interfaces de rede configuradas corretamente** com rotas dedicadas;
+* Configurar **NAT no firewall de borda**, garantindo que o tráfego de cada interface saia pelo link correto;
+* Criar **um script e um conjunto de parâmetros para cada interface** monitorada;
+* Adaptar os nomes e caminhos nos scripts, crontab, e Zabbix conforme sua infraestrutura.
+
+Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
 
 ---
 
@@ -91,23 +102,6 @@ Adicione as linhas abaixo:
 # Speedtest ens256 a cada minuto (ou ajuste para rodar de 5 em 5 minutos)
 * * * * * /home/admlocal/speedtest/runspeedtest_ens256
 ```
-
----
-
-## ⚠️ Observações Importantes
-
-> Este projeto **não tem como objetivo ensinar a configurar interfaces de rede, rotas ou regras de NAT em firewall de borda**.
-
-Para monitorar múltiplos links de internet com interfaces distintas, é **imprescindível**:
-
-* Ter as **interfaces de rede configuradas corretamente** com rotas dedicadas;
-* Configurar **NAT no firewall de borda**, garantindo que o tráfego de cada interface saia pelo link correto;
-* Criar **um script e um conjunto de parâmetros para cada interface** monitorada;
-* Adaptar os nomes e caminhos nos scripts, crontab, e Zabbix conforme sua infraestrutura.
-
-Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
-
----
 
 ## 📚 Referências
 
