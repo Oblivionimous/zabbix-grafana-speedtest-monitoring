@@ -128,6 +128,82 @@ Packet Loss: Not available.
 Se você visualizar uma saída semelhante, a instalação foi concluída com sucesso.
 
 ---
+Claro! Aqui está um trecho **pronto para incluir no seu README.md**, explicando a manipulação dos scripts `runspeedtest_ens224` e `runspeedtest_ens256`, com instruções para renomear, editar e ajustar permissões conforme necessário para o ambiente:
+
+---
+
+## Configuração dos Scripts de Execução
+
+Para que o monitoramento funcione corretamente, é necessário configurar um **script de execução do Speedtest** para cada interface de rede monitorada.
+
+### Baixando e Personalizando o Script
+
+1. Acesse o diretório onde os scripts do speedtest estão localizados: (lembrando que o diretório deve ser definido de acordo com sua instalação)
+
+```bash
+cd /home/admlocal/speedtest
+```
+
+2. **Baixe os arquivos** `runspeedtest_ens224` e `runspeedtest_ens256` a partir do repositório do Zabbix (ou copie de outro servidor).
+
+3. **Renomeie** o script de acordo com o nome da sua interface de rede. Por exemplo, para a interface `ens192`:
+
+```bash
+cp runspeedtest_ens224 runspeedtest_ens192
+```
+
+4. **Edite o script** com o nome correto da interface:
+
+```bash
+nano runspeedtest_ens192
+```
+
+Altere a linha:
+
+```bash
+IFACE="ens224"
+```
+
+Para:
+
+```bash
+IFACE="ens192"
+```
+
+5. Conceda permissão de execução ao script:
+
+```bash
+chmod +x runspeedtest_ens192
+```
+
+---
+
+### 📂 Exemplo de Arquivos no Diretório
+
+Após configuração, seu diretório `/home/admlocal/speedtest` poderá conter:
+
+```text
+runspeedtest_ens224     # Script para ens224
+runspeedtest_ens192     # Script renomeado e adaptado para ens192
+speedtest               # Binário oficial do Speedtest Ookla
+speedtestzabbix_*.txt   # Arquivos com dados filtrados para o Zabbix
+speedtestlog.txt        # Log histórico completo dos testes
+```
+
+### Permissões Recomendadas
+
+Garanta que os arquivos de script e binário estejam com permissões corretas para execução:
+
+```bash
+chmod +x /home/admlocal/speedtest/runspeedtest_*
+chmod +x /home/admlocal/speedtest/speedtest
+```
+
+E, se necessário, ajuste a propriedade:
+
+```bash
+chown root:root /home/admlocal/speedtest/runspeedtest_*
+```
 
 ## ⚙Configuração
 
