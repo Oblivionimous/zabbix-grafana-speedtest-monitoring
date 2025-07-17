@@ -1,18 +1,3 @@
-## ⚠️ Observações Importantes
-
-> Este projeto **não tem como objetivo ensinar a configurar interfaces de rede, rotas ou regras de NAT em firewall de borda**.
-
-Para monitorar múltiplos links de internet com interfaces distintas, é **imprescindível**:
-
-* Ter as **interfaces de rede configuradas corretamente** com rotas dedicadas;
-* Configurar **NAT no firewall de borda**, garantindo que o tráfego de cada interface saia pelo link correto;
-* Criar **um script e um conjunto de parâmetros para cada interface** monitorada;
-* Adaptar os nomes e caminhos nos scripts, crontab, e Zabbix conforme sua infraestrutura.
-
-Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
-
----
-
 # Zabbix SpeedTest Monitoring
 
 Monitoramento automatizado da velocidade da internet (download, upload, latência, jitter e perda de pacotes), com integração ao Zabbix e visualização gráfica no Grafana.
@@ -44,6 +29,21 @@ Este projeto fornece uma solução completa para verificar e monitorar a qualida
 * Fácil customização por interface e estrutura
 
 > 💡 **Observação:** Adapte os nomes de interface, caminhos e parâmetros de acordo com a estrutura da sua rede.
+
+---
+
+## ⚠️ Observações Importantes
+
+> Este projeto **não tem como objetivo ensinar a configurar interfaces de rede, rotas ou regras de NAT em firewall de borda**.
+
+Para monitorar múltiplos links de internet com interfaces distintas, é **imprescindível**:
+
+* Ter as **interfaces de rede configuradas corretamente** com rotas dedicadas;
+* Configurar **NAT no firewall de borda**, garantindo que o tráfego de cada interface saia pelo link correto;
+* Criar **um script e um conjunto de parâmetros para cada interface** monitorada;
+* Adaptar os nomes e caminhos nos scripts, crontab, e Zabbix conforme sua infraestrutura.
+
+Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
 
 ---
 
