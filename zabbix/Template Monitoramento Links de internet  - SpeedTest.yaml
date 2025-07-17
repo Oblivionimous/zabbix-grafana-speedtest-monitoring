@@ -1,0 +1,169 @@
+zabbix_export:
+  version: '7.4'
+  template_groups:
+    - uuid: 58f7374ae5e34a5a845b534f8a163e9e
+      name: Personalizados
+  templates:
+    - uuid: 8385bebec96f4e15952dd19c15f96a75
+      template: 'Template Monitoramento Links de internet  - SpeedTest'
+      name: 'Template Monitoramento Links de internet  - SpeedTest'
+      description: |
+        Template para monitoramento de links de internet via Speedtest CLI (Ookla), com coleta de métricas como latência, jitter, download, upload, perda de pacotes e ISP por interface de rede.
+        
+        Este template é ideal para ambientes com múltiplos links ou interfaces, e realiza testes automatizados por meio de scripts integrados ao Zabbix Agent 2 via UserParameters. Os dados podem ser visualizados graficamente no Grafana com dashboard dedicado.
+        
+        Observação: adapte os scripts e as nomenclaturas das interfaces de rede (ens224, ens256, etc.) conforme a estrutura e os padrões da sua infraestrutura.
+        
+        Documentação completa disponível em:
+        👉 https://github.com/Oblivionimous/zabbix-grafana-speedtest-monitoring
+      groups:
+        - name: Personalizados
+      items:
+        - uuid: 72f020bd37f849b69e178e635883df4b
+          name: 'Download SpeedTest ens224'
+          key: download_ens224
+          value_type: FLOAT
+          units: Mbit/s
+        - uuid: a6c2743f09d64c0fbf48e8201effb01b
+          name: 'ISP SpeedTest ens224'
+          key: isp_ens224
+          value_type: TEXT
+        - uuid: 5762f3a37fed4ec28c14b96b4beca738
+          name: 'Jitter SpeedTest ens224'
+          key: jitter_ens224
+          value_type: FLOAT
+          units: ms
+        - uuid: 189e2f3269b145869ee1c1cb35dcb763
+          name: 'Latência SpeedTest ens224'
+          key: latency_ens224
+          value_type: FLOAT
+          units: ms
+        - uuid: 774bbee967f24d0ca0b7016991487aa1
+          name: 'Loss SpeedTest ens224'
+          key: loss_ens224
+          value_type: FLOAT
+          units: '%'
+        - uuid: 85d14591b2a84b18934b7fa884fccdda
+          name: 'Upload SpeedTest ens224'
+          key: upload_ens224
+          value_type: FLOAT
+          units: Mbit/s
+      dashboards:
+        - uuid: 37aaf478729646199c96e22dc8919697
+          name: SpeedTest
+          display_period: '60'
+          pages:
+            - widgets:
+                - type: graph
+                  'y': '1'
+                  width: '37'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  - SpeedTest'
+                        name: 'Download SpeedTest'
+                    - type: STRING
+                      name: reference
+                      value: EVBVH
+                - type: graph
+                  'y': '6'
+                  width: '37'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  - SpeedTest'
+                        name: 'Latência SpeedTest'
+                    - type: STRING
+                      name: reference
+                      value: JWALO
+                - type: graph
+                  'y': '11'
+                  width: '72'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  - SpeedTest'
+                        name: 'Jitter SpeedTest'
+                    - type: STRING
+                      name: reference
+                      value: QTMLE
+                - type: graph
+                  x: '37'
+                  'y': '1'
+                  width: '35'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  - SpeedTest'
+                        name: 'Upload SpeedTest'
+                    - type: STRING
+                      name: reference
+                      value: VNIGB
+                - type: graph
+                  x: '37'
+                  'y': '6'
+                  width: '35'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  - SpeedTest'
+                        name: 'Loss SpeedTest'
+                    - type: STRING
+                      name: reference
+                      value: JQYOI
+  graphs:
+    - uuid: a4e33e42a2174466af37387729ffa220
+      name: 'Download SpeedTest'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  - SpeedTest'
+            key: download_ens224
+    - uuid: f2b3b695eb1b484389745ebafc8466cd
+      name: 'Jitter SpeedTest'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  - SpeedTest'
+            key: jitter_ens224
+    - uuid: 78b5abb8df1e4ddca8f380660f13d0ab
+      name: 'Latência SpeedTest'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  - SpeedTest'
+            key: latency_ens224
+    - uuid: 357f8a7764084786a71a43116fcf909c
+      name: 'Loss SpeedTest'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  - SpeedTest'
+            key: loss_ens224
+    - uuid: 7b7713cca4fc414dabd6ff6b3b183ff6
+      name: 'Upload SpeedTest'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  - SpeedTest'
+            key: upload_ens224

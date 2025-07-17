@@ -1,0 +1,34 @@
+#!/bin/bash
+
+LOCK="/tmp/runspeedtest_ens256.lock"
+exec 200>$LOCK
+flock -n 200 || exit 1
+
+# Define a interface de teste
+IFACE="ens256"
+
+# Arquivos
+OUTFILE="/home/admlocal/speedtest/speedtest_${IFACE}.txt"
+ZABBIXFILE="/home/admlocal/speedtest/speedtestzabbix_${IFACE}.txt"
+LOGFILE="/home/admlocal/speedtest/speedtestlog.txt"
+
+# Executa o SpeedTest e salva saída completa
+/home/admlocal/speedtest/speedtest \
+  --accept-license --accept-gdpr \
+  --interface $IFACE \
+  --format human-readable \
+  --progress=no > $OUTFILE
+
+# Filtra resultados para Zabbix
+grep "Idle Latency" $OUTFILE | sed -n '/Idle Latency/s/ \+/ /gp' > $ZABBIXFILE
+grep "Download" $OUTFILE | sed -n '/Download/s/ \+/ /gp' >> $ZABBIXFILE
+grep "Upload" $OUTFILE | sed -n '/Upload/s/ \+/ /gp' >> $ZABBIXFILE
+grep "Packet Loss" $OUTFILE | sed -n '/Packet Loss/s/ \+/ /gp' >> $ZABBIXFILE
+
+# Adiciona operadora (ISP)
+grep "ISP:" $OUTFILE | awk -F': ' '{print $2}' >> $ZABBIXFILE
+
+# Adiciona log histórico consolidado
+date "+%Y-%m-%d--%H:%M" >> $LOGFILE
+cat $OUTFILE >> $LOGFILE
+echo "-----------------------------------" >> $LOGFILE

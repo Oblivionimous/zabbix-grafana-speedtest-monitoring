@@ -1,0 +1,282 @@
+zabbix_export:
+  version: '7.4'
+  template_groups:
+    - uuid: 58f7374ae5e34a5a845b534f8a163e9e
+      name: Personalizados
+    - uuid: 3496c5070aba4f868b0ccd7d4a1e0ab7
+      name: 'Templates / DNS'
+  templates:
+    - uuid: 459c409603654bc69f7eec5a531ebd85
+      template: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+      name: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+      description: |
+        Template para monitoramento ativo de conectividade e DNS por interface de rede, ideal para ambientes com múltiplos links (multi-WAN). Executa testes de DNS, HTTP e ICMP por meio de scripts personalizados, utilizando macros para definir interfaces, destinos e servidores DNS. Permite avaliar latência, perda de pacotes, resolução de nomes, status HTTP e desempenho de cada link de forma individual.
+        
+        Observação: adapte os scripts e as nomenclaturas das interfaces de rede (ens224, ens256, etc.) conforme a estrutura e os padrões da sua infraestrutura.
+        
+        Documentação completa disponível em:
+        👉 https://github.com/Oblivionimous/zabbix-grafana-speedtest-monitoring
+      groups:
+        - name: Personalizados
+        - name: 'Templates / DNS'
+      items:
+        - uuid: c5c602e30f7f475095711f5f395780da
+          name: 'DNS Check to {$DST_HOSTNAME} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_dns.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+          valuemap:
+            name: 'Retorno DNS'
+        - uuid: 8f3a69473a4f45d0ad06418d06a46243
+          name: 'DNS IP(s) resolved for {$DST_HOSTNAME} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_dns_ip.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+          value_type: TEXT
+        - uuid: 4f40a391c89d4cd6a22ac33a853812e2
+          name: 'DNS Query time to {$DST_HOSTNAME} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_dns_querytime.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+          units: ms
+          valuemap:
+            name: 'Retorno DNS'
+        - uuid: a9748662f72341b581e5e2d7cae26a80
+          name: 'DNS Status Flag for {$DST_HOSTNAME} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_dns_statusflag.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+          value_type: TEXT
+        - uuid: 4b499469cc7046608d38b4289ff06c92
+          name: 'DNS TTL for {$DST_HOSTNAME} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_dns_ttl.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+          units: s
+          valuemap:
+            name: 'Retorno DNS'
+        - uuid: 46d4c6a51d2f498ca79f9290cab91702
+          name: 'HTTP GET {$STRING} from {$URL} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_http_get.sh[{$URL},{$SRC_IFACE},{$STRING}]'
+          valuemap:
+            name: 'String URL'
+        - uuid: 4cdb874e687c496788742019db192bb8
+          name: 'HTTP Status to {$URL} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'check_http_status.sh[{$URL},{$SRC_IFACE}]'
+          valuemap:
+            name: 'HTTP Status Code'
+        - uuid: 39ca9fb17faa4ac79d26f517fda37f77
+          name: 'ICMP Loss to {$DST_IP} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'icmp_loss_por_interface.sh[{$DST_IP},{$SRC_IP}]'
+          value_type: FLOAT
+          units: '%'
+          timeout: 10s
+        - uuid: 93cfc595984545f0ae8284cdaa9999d9
+          name: 'ICMP Ping Status to {$DST_IP} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'icmp_ping_por_interface.sh[{$DST_IP},{$SRC_IP}]'
+          valuemap:
+            name: 'Service state'
+        - uuid: aa1dfb2056374ef69812e190ab5b0859
+          name: 'ICMP Response Time to {$DST_IP} via {$SRC_IFACE} - {$LINK.ID}'
+          type: EXTERNAL
+          key: 'icmp_response_por_interface.sh[{$DST_IP},{$SRC_IP}]'
+          value_type: FLOAT
+          units: ms
+          timeout: 10s
+      macros:
+        - macro: '{$DNS_SERVER}'
+          description: 'IP do servidor DNS que será consultado no teste DNS (ex: 8.8.8.8, 1.1.1.1). Utilizado pelo script check_dns.sh para validar resolução de nomes pelo link monitorado.'
+        - macro: '{$DST_HOSTNAME}'
+          description: 'Hostname a ser consultado no teste DNS (ex: google.com). Usado no script check_dns.sh para verificar se o link resolve nomes corretamente.'
+        - macro: '{$DST_IP}'
+          description: 'IP de destino para os testes ICMP (Ping, Loss, Response Time, Jitter). Ex: 8.8.8.8 (Google DNS), 1.1.1.1 (Cloudflare).'
+        - macro: '{$LINK.ID}'
+          description: 'Identificação do  nome da operadora + código do link'
+        - macro: '{$SRC_IFACE}'
+          description: 'Interface de saída do servidor para o link monitorado (ex: ens224, ens256). Define por qual link o teste será executado.'
+        - macro: '{$SRC_IP}'
+          description: 'IP de origem configurado na interface de saída. Necessário caso o script ou configuração de NAT/policy routing utilize IP específico de origem para sair pelo link.'
+        - macro: '{$STRING}'
+          description: 'String ou palavra esperada no conteúdo retornado pelo teste HTTP GET. Exemplo: “Google” para confirmar que a página carregou corretamente.'
+        - macro: '{$URL}'
+          description: 'URL completa para teste HTTP Status ou GET. Ex: http://google.com ou https://meuservidor.local.'
+      dashboards:
+        - uuid: 05a2e5159c484c6fbb986f3a671b7d11
+          name: 'Status Link de internet'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '37'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+                        name: 'ICMP Ping Status'
+                    - type: STRING
+                      name: reference
+                      value: AVRJS
+                - type: graph
+                  'y': '5'
+                  width: '37'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+                        name: 'ICMP Loss'
+                    - type: STRING
+                      name: reference
+                      value: DPDIV
+                - type: graph
+                  'y': '10'
+                  width: '37'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+                        name: 'DNS TTL'
+                    - type: STRING
+                      name: reference
+                      value: ARJGT
+                - type: graph
+                  x: '37'
+                  width: '35'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+                        name: 'ICMP Response Time'
+                    - type: STRING
+                      name: reference
+                      value: GTUXJ
+                - type: graph
+                  x: '37'
+                  'y': '5'
+                  width: '35'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+                        name: 'DNS Check'
+                    - type: STRING
+                      name: reference
+                      value: EITJE
+                - type: graph
+                  x: '37'
+                  'y': '10'
+                  width: '35'
+                  height: '5'
+                  fields:
+                    - type: GRAPH
+                      name: graphid.0
+                      value:
+                        host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+                        name: 'DNS Query time'
+                    - type: STRING
+                      name: reference
+                      value: AOOBV
+      valuemaps:
+        - uuid: 1e2b687518ef49039ba7357043da2d75
+          name: 'HTTP Status Code'
+          mappings:
+            - value: '200'
+              newvalue: OK
+            - value: '301'
+              newvalue: 'Redirect (Found)'
+            - value: '400'
+              newvalue: 'Bad Request'
+            - value: '401'
+              newvalue: Unauthorized
+            - value: '403'
+              newvalue: Forbidden
+            - value: '404'
+              newvalue: 'Not Found'
+            - value: '500'
+              newvalue: 'Internal Server Error'
+            - value: '502'
+              newvalue: 'Bad Gateway'
+            - value: '503'
+              newvalue: 'Service Unavailable'
+        - uuid: 43a2ba660f8c459082d80e37848b9b6d
+          name: 'Retorno DNS'
+          mappings:
+            - value: '0'
+              newvalue: Falha
+            - value: '1'
+              newvalue: Sucesso
+        - uuid: 1cde53325b3c41aa99107133152a4343
+          name: 'Service state'
+          mappings:
+            - value: '0'
+              newvalue: Down
+            - value: '1'
+              newvalue: Up
+        - uuid: 569f3bf6cca24654b29f576cc45f2169
+          name: 'String URL'
+          mappings:
+            - value: '0'
+              newvalue: 'String Not Found (Down)'
+            - value: '1'
+              newvalue: 'String Found (Up)'
+  graphs:
+    - uuid: 7f3f6488c4514a91b5bce451bc4c4986
+      name: 'DNS Check'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+            key: 'check_dns.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+    - uuid: cc4213ef7be948adb8525b5cbffdf894
+      name: 'DNS Query time'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+            key: 'check_dns_querytime.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+    - uuid: f87ab94f554d4662a1d16c1f26450ad1
+      name: 'DNS TTL'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+            key: 'check_dns_ttl.sh[{$DNS_SERVER},{$DST_HOSTNAME},{$SRC_IFACE}]'
+    - uuid: 07f82acd011e42b8bc527e5bb7850051
+      name: 'ICMP Loss'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+            key: 'icmp_loss_por_interface.sh[{$DST_IP},{$SRC_IP}]'
+    - uuid: be9788a843c44077b7e2c0ec7588a6f6
+      name: 'ICMP Ping Status'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+            key: 'icmp_ping_por_interface.sh[{$DST_IP},{$SRC_IP}]'
+    - uuid: 83fbe7b431f3400081b3e745c7cba99d
+      name: 'ICMP Response Time'
+      yaxismax: '0'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Template Monitoramento Links de internet  DNS - HTTP - ICMP'
+            key: 'icmp_response_por_interface.sh[{$DST_IP},{$SRC_IP}]'
