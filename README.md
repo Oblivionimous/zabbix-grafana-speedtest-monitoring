@@ -135,21 +135,22 @@ Para que o monitoramento funcione corretamente, é necessário configurar um **s
 
 ### Baixando e Personalizando o Script
 
-1. Acesse o diretório onde os scripts do speedtest estão localizados: (lembrando que o diretório deve ser definido de acordo com sua instalação)
+**Acesse o diretório onde os scripts do speedtest estão localizados: (lembrando que o diretório deve ser definido de acordo com sua instalação)
 
 ```bash
 cd /home/admlocal/speedtest
 ```
 
-2. **Baixe os arquivos** `runspeedtest_ens224` e `runspeedtest_ens256` a partir do repositório do Zabbix (ou copie de outro servidor).
+**Baixe os scripts runspeedtest_ens224 diretamente do repositório oficial no GitHub:
 
-3. **Renomeie** o script de acordo com o nome da sua interface de rede. Por exemplo, para a interface `ens192`:
+Repositório: https://github.com/Oblivionimous/zabbix-grafana-speedtest-monitoring.git
+
+**Renomeie** o script de acordo com o nome da sua interface de rede. Por exemplo, para a interface `ens192`:
 
 ```bash
 cp runspeedtest_ens224 runspeedtest_ens192
 ```
-
-4. **Edite o script** com o nome correto da interface:
+**Edite o script** com o nome correto da interface:
 
 ```bash
 nano runspeedtest_ens192
@@ -219,17 +220,6 @@ UserParameter=download_ens224,grep "Download:" /home/admlocal/speedtest/speedtes
 UserParameter=upload_ens224,grep "Upload:" /home/admlocal/speedtest/speedtestzabbix_ens224.txt | awk '{print $3}'
 UserParameter=loss_ens224,grep "Packet Loss:" /home/admlocal/speedtest/speedtestzabbix_ens224.txt | awk '{if ($3=="Not") print 0; else print $3}' | sed 's/%//'
 UserParameter=isp_ens224,tail -n 1 /home/admlocal/speedtest/speedtestzabbix_ens224.txt
-```
-
-#### SpeedTest `ens256`
-
-```conf
-UserParameter=latency_ens256,grep "Idle Latency:" /home/admlocal/speedtest/speedtestzabbix_ens256.txt | awk '{print $3}'
-UserParameter=jitter_ens256,grep "Idle Latency:" /home/admlocal/speedtest/speedtestzabbix_ens256.txt | sed 's/.*jitter: \([0-9.]*\)ms.*/\1/'
-UserParameter=download_ens256,grep "Download:" /home/admlocal/speedtest/speedtestzabbix_ens256.txt | awk '{print $3}'
-UserParameter=upload_ens256,grep "Upload:" /home/admlocal/speedtest/speedtestzabbix_ens256.txt | awk '{print $3}'
-UserParameter=loss_ens256,grep "Packet Loss:" /home/admlocal/speedtest/speedtestzabbix_ens256.txt | awk '{if ($3=="Not") print 0; else print $3}' | sed 's/%//'
-UserParameter=isp_ens256,tail -n 1 /home/admlocal/speedtest/speedtestzabbix_ens256.txt
 ```
 
 > Após editar o arquivo do agente, **reinicie o serviço**:
