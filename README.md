@@ -46,6 +46,88 @@ Para monitorar múltiplos links de internet com interfaces distintas, é **impre
 Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
 
 ---
+Claro! Aqui está a seção **“Instalação do Speedtest CLI”** formatada em Markdown para você incluir diretamente no `README.md`:
+
+---
+
+## 🛠️ Instalação do Speedtest CLI
+
+### Pré-requisitos
+
+Certifique-se de instalar os pacotes básicos:
+
+```bash
+sudo apt install wget tar nano vi -y
+```
+
+### Preparar diretório para instalação
+
+```bash
+mkdir ~/speedtest
+cd ~/speedtest
+```
+
+### Baixar Speedtest CLI da Ookla
+
+#### Para sistemas **x86 (32 bits)**:
+
+```bash
+wget https://bintray.com/ookla/download/download_file?file_path=ookla-speedtest-1.0.0-i386-linux.tgz
+```
+
+#### Para sistemas **x64 (64 bits)**:
+
+```bash
+wget https://bintray.com/ookla/download/download_file?file_path=ookla-speedtest-1.0.0-x86_64-linux.tgz
+```
+
+### Renomear e extrair o pacote
+
+```bash
+mv download_file\?file_path\=ookla-speedtest-1.0.0-x86_64-linux.tgz speedtest-1.0.0-x86_64-linux.tgz
+tar zxvf speedtest-1.0.0-x86_64-linux.tgz
+sudo chmod +x speedtest
+```
+
+---
+
+## 🚀 Executando o Speedtest CLI
+
+O binário `speedtest` já está pronto para execução. Use um dos comandos abaixo, conforme sua preferência ou ambiente:
+
+```bash
+./speedtest
+~/speedtest/speedtest
+speedtest --accept-gdpr
+```
+
+Na **primeira execução**, será necessário aceitar os termos de uso. Você pode fazer isso manualmente ou adicionando as opções abaixo ao comando:
+
+```bash
+speedtest --accept-license --accept-gdpr
+```
+
+---
+
+## ✅ Exemplo de Saída Esperada
+
+```text
+Speedtest by Ookla
+
+     Server: Algar Telecom - São Paulo (id: 28443)
+        ISP: Algar Telecom
+Idle Latency:    16.52 ms   (jitter: 0.36ms, low: 16.12ms, high: 17.26ms)
+   Download:   785.51 Mbps (data used: 998.5 MB)
+                68.59 ms   (jitter: 41.15ms, low: 17.27ms, high: 663.49ms)
+     Upload:   685.79 Mbps (data used: 1.1 GB)
+                17.52 ms   (jitter: 7.03ms, low: 15.48ms, high: 256.98ms)
+Packet Loss: Not available.
+ Result URL: https://www.speedtest.net/result/c/624e636d-92f9-47cc-a98b-ea54293a8188
+```
+
+Se você visualizar uma saída semelhante, a instalação foi concluída com sucesso.
+
+---
 
 ## ⚙️ Configuração
 
