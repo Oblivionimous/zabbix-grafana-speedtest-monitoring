@@ -36,18 +36,6 @@ Este projeto fornece uma solução completa para verificar e monitorar a qualida
 
 ---
 
-## 📂 Estrutura do Projeto
-
-```
-zabbix-speedtest-monitoring/
-├── speedtest_script/        # Script Python para execução dos testes
-├── zabbix_template/         # Template XML para importação no Zabbix
-├── grafana/                 # Dashboard JSON para importação no Grafana
-└── docs/                    # Documentação complementar
-```
-
----
-
 ## ⚙️ Configuração
 
 ### 🛠️ Configuração de Caminhos e UserParameters
@@ -118,28 +106,6 @@ Para monitorar múltiplos links de internet com interfaces distintas, é **impre
 * Adaptar os nomes e caminhos nos scripts, crontab, e Zabbix conforme sua infraestrutura.
 
 Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
-
----
-
-## 📥 Como Utilizar
-
-1. Clone este repositório:
-
-   ```bash
-   git clone https://github.com/seu-usuario/zabbix-speedtest-monitoring.git
-   ```
-
-2. Instale o [Speedtest CLI](https://www.speedtest.net/apps/cli)
-
-3. Configure o script Python com a interface e o `server-id` desejado (consultável via `speedtest --servers`)
-
-4. Importe o template XML no Zabbix
-
-5. Configure os *UserParameters* no `zabbix_agent.conf` ou `zabbix_agent2.conf`
-
-6. Agende a execução via `crontab` ou `systemd`
-
-7. Importe o dashboard JSON no Grafana
 
 ---
 
