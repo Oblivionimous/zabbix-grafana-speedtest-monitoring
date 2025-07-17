@@ -4,7 +4,7 @@ Monitoramento automatizado da velocidade da internet (download, upload, latênci
 
 ---
 
-## 🚀 Visão Geral
+## Visão Geral
 
 Este projeto fornece uma solução completa para verificar e monitorar a qualidade da sua conexão com a internet. A coleta dos dados é realizada por meio do Speedtest CLI da Ookla e os resultados são enviados ao Zabbix usando **UserParameters**. As informações são exibidas graficamente em dashboards do Grafana.
 
@@ -50,7 +50,7 @@ Claro! Aqui está a seção **“Instalação do Speedtest CLI”** formatada em
 
 ---
 
-## 🛠️ Instalação do Speedtest CLI
+## Instalação do Speedtest CLI
 
 ### Pré-requisitos
 
@@ -84,14 +84,14 @@ wget https://bintray.com/ookla/download/download_file?file_path=ookla-speedtest-
 ### Renomear e extrair o pacote
 
 ```bash
-mv download_file\?file_path\=ookla-speedtest-1.0.0-x86_64-linux.tgz speedtest-1.0.0-x86_64-linux.tgz
+mv download_file?file_path=ookla-speedtest-1.0.0-x86_64-linux.tgz ~/speedtest/speedtest-1.0.0-x86_64-linux.tgz
 tar zxvf speedtest-1.0.0-x86_64-linux.tgz
 sudo chmod +x speedtest
 ```
 
 ---
 
-## 🚀 Executando o Speedtest CLI
+## Executando o Speedtest CLI
 
 O binário `speedtest` já está pronto para execução. Use um dos comandos abaixo, conforme sua preferência ou ambiente:
 
@@ -109,7 +109,7 @@ speedtest --accept-license --accept-gdpr
 
 ---
 
-## ✅ Exemplo de Saída Esperada
+## Exemplo de Saída Esperada
 
 ```text
 Speedtest by Ookla
@@ -129,9 +129,9 @@ Se você visualizar uma saída semelhante, a instalação foi concluída com suc
 
 ---
 
-## ⚙️ Configuração
+## ⚙Configuração
 
-### 🛠️ Configuração de Caminhos e UserParameters
+### Configuração de Caminhos e UserParameters
 
 Os caminhos para os scripts e arquivos `.txt` devem ser definidos de acordo com o local onde você deseja armazenar os arquivos no seu ambiente.
 
@@ -185,7 +185,7 @@ Adicione as linhas abaixo:
 * * * * * /home/admlocal/speedtest/runspeedtest_ens256
 ```
 
-## 📚 Referências
+## Referências
 
 * [https://www.namehero.com/blog/measuring-internet-speed-on-linux-with-speedtest-cli/](https://www.namehero.com/blog/measuring-internet-speed-on-linux-with-speedtest-cli/)
 * [https://phoenixnap.com/kb/linux-network-speed-test](https://phoenixnap.com/kb/linux-network-speed-test)
