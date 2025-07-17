@@ -46,9 +46,6 @@ Para monitorar múltiplos links de internet com interfaces distintas, é **impre
 Se for utilizar apenas uma interface, basta configurar **um único script**, um conjunto de *UserParameters* e um template no Zabbix.
 
 ---
-Claro! Aqui está a seção **“Instalação do Speedtest CLI”** formatada em Markdown para você incluir diretamente no `README.md`:
-
----
 
 ## Instalação do Speedtest CLI
 
