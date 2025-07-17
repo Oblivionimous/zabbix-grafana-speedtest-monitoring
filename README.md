@@ -12,7 +12,7 @@ Este projeto fornece uma solução completa para verificar e monitorar a qualida
 
 ## 🔧 Tecnologias Utilizadas
 
-* **Python + Speedtest CLI** (Ookla)
+* **Shell + Speedtest CLI** (Ookla)
 * **Zabbix Agent** ou **Zabbix Agent 2**
 * **Grafana**
 * **Linux** (Ubuntu, RHEL, AlmaLinux etc.)
